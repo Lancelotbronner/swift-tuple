@@ -11,7 +11,9 @@ let package = Package(
 		.library(name: "swift-tuple", targets: ["Tuple"]),
 	],
 	targets: [
-		.target(name: "Tuple"),
+		.target(name: "Tuple", swiftSettings: [
+			.enableExperimentalFeature("BuiltinModule"),
+		]),
 		.testTarget(name: "TupleTests", dependencies: ["Tuple"]),
 	]
 )

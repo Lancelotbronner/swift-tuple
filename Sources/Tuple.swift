@@ -5,6 +5,8 @@
 //  Created by Christophe Bronner on 2025-11-09.
 //
 
+import Builtin
+
 /// Provides conditional conformances to standard protocols and allows you to "extend tuples" with your own protocols.
 @frozen public struct Tuple<each T> {
 	public var storage: (repeat each T)
@@ -31,6 +33,13 @@
 	/// - Parameter tuple: A regular tuple.
 	@inlinable public init(flatten tuple: (repeat each T)) {
 		self.storage = tuple
+	}
+}
+
+public extension Tuple {
+	/// The number of elements in this tuple.
+	@inlinable var count: Int {
+		Int(Builtin.packLength((repeat each T).self))
 	}
 }
 

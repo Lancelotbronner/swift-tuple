@@ -11,6 +11,13 @@ import Tuple
 
 @Suite
 struct TupleTests {
+	@Test func count() {
+		#expect(Tuple().count == 0)
+		#expect(Tuple(1).count == 1)
+		#expect(Tuple(1, 2).count == 2)
+		#expect(Tuple(1, 2, 3).count == 3)
+	}
+
 	@Test func equatable() {
 		#expect(Tuple(1, "String", false) == Tuple(1, "String", false))
 		#expect(Tuple(1, "String", true) != Tuple(1, "String", false))
