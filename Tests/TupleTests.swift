@@ -26,6 +26,7 @@ struct TupleTests {
 	@Test func hashable() {
 		let set: Set = [
 			Tuple(1, "String", false),
+			Tuple(1, "String", false),
 			Tuple(1, "String", true),
 			Tuple(1, "String2", false),
 			Tuple(1, "String2", true),
