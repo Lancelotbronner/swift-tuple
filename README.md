@@ -37,7 +37,16 @@ it.next() == nil
 
 - `Equatable`
 - `Hashable`
+- `BitwiseCopyable`
+- `Sendable`
+- `Error`
 - `Comparable`, with lexicographic ordering
 - `Codable`, implemented as an unkeyed container
 - `Sequence`, acts as a zip
 - `IteratorProtocol`, acts as a zip
+- `OptionalProtocol`, transpose into optional
+
+`Tuple` also has additional utilities:
+
+- `count`
+- `isAnyNone` and `Tuple` when each elements is ``OptionalProtocol``.

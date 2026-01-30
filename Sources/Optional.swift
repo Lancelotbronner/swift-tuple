@@ -32,6 +32,7 @@ extension Tuple: OptionalProtocol where repeat each T: OptionalProtocol {
 	}
 }
 
+/// Helper for Tuple interactions with optionals.
 public protocol OptionalProtocol<Wrapped> {
 	/// The optional value.
 	associatedtype Wrapped

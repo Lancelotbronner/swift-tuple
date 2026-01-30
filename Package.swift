@@ -6,6 +6,8 @@ let package = Package(
 	name: "swift-tuple",
 	platforms: [
 		.macOS(.v14),
+		.iOS(.v17),
+		.watchOS(.v10),
 	],
 	products: [
 		.library(name: "swift-tuple", targets: ["Tuple"]),

@@ -9,6 +9,7 @@ import Builtin
 
 /// Provides conditional conformances to standard protocols and allows you to "extend tuples" with your own protocols.
 @frozen public struct Tuple<each T> {
+	/// The elements of this tuple.
 	public var storage: (repeat each T)
 
 	/// Initializes a Tuple with its elements.
@@ -45,6 +46,7 @@ public extension Tuple {
 
 extension Tuple: Sendable where repeat each T: Sendable {}
 extension Tuple: BitwiseCopyable where repeat each T: BitwiseCopyable {}
+extension Tuple: Error where repeat each T: Error {}
 
 extension Tuple: Equatable where repeat each T: Equatable {
 	@inlinable public static func == (lhs: Self, rhs: Self) -> Bool {
