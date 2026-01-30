@@ -59,4 +59,28 @@ struct TupleTests {
 		let value = try JSONDecoder().decode(Tuple<Int, String, Bool>.self, from: data)
 		#expect(value == Tuple(1, "String", false))
 	}
+
+	@Test func iterator() {
+		var it = Tuple(["Hello", "World"], [0, 1, 2]).makeIterator()
+		#expect(it.next() == Tuple<String?, Int?>("Hello", 0))
+		#expect(it.next() == Tuple<String?, Int?>("World", 1))
+		#expect(it.next() == Tuple<String?, Int?>(nil, 2))
+		#expect(it.next() == nil)
+		#expect(it.next() == nil)
+	}
+
+	@Test func optional() {
+		let some = Tuple(Int?.some(2), Int?.some(1))
+		#expect(some.isAllNone == false)
+		#expect(some.isAnyNone == false)
+		#expect(some.asOptional == some)
+		let mixed = Tuple(Int?.none, Int?.some(1))
+		#expect(mixed.isAllNone == false)
+		#expect(mixed.isAnyNone == true)
+		#expect(mixed.asOptional == mixed)
+		let none = Tuple(Int?.none, String?.none)
+		#expect(none.isAllNone == true)
+		#expect(none.isAnyNone == true)
+		#expect(none.asOptional == nil)
+	}
 }
