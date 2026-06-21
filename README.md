@@ -42,11 +42,12 @@ it.next() == nil
 - `Error`
 - `Comparable`, with lexicographic ordering
 - `Codable`, implemented as an unkeyed container
-- `Sequence`, acts as a zip
-- `IteratorProtocol`, acts as a zip
 - `OptionalProtocol`, transpose into optional
+- `CaseIterable`, produces a combination of elements
 
 `Tuple` also has additional utilities:
 
 - `count`
-- `isAnyNone` and `Tuple` when each elements is ``OptionalProtocol``.
+- `zip` to produce a zip collection from a tuple of sequences
+- `combination` to produce a combination of a tuple of collections
+- `isAnyNone` and `isAllNone` when each element is ``OptionalProtocol``.

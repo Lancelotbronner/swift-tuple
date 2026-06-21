@@ -42,6 +42,31 @@ public extension Tuple {
 	@inlinable var count: Int {
 		Int(Builtin.packLength((repeat each T).self))
 	}
+
+//	@inlinable subscript(position: Int) -> T {
+//		_read {
+//			var i = 0
+//			for e in repeat each storage {
+//				if i == position {
+//					yield e
+//					return
+//				}
+//				i += 1
+//			}
+//		}
+//		_modify {
+//			var tmp = self[position]
+//			yield &tmp
+//
+//			var i = 0
+//			func update<T>(_ previous: T) -> T {
+//				defer { i += 1}
+//				guard i == position else { return previous }
+//				return tmp
+//			}
+//			storage = (repeat update(each storage))
+//		}
+//	}
 }
 
 extension Tuple: Sendable where repeat each T: Sendable {}
@@ -85,5 +110,40 @@ extension Tuple: Encodable where repeat each T: Encodable {
 	@inlinable public func encode(to encoder: any Encoder) throws {
 		var container = encoder.unkeyedContainer()
 		repeat try container.encode((each storage).self)
+	}
+}
+
+extension Tuple: CustomDebugStringConvertible {
+	public var debugDescription: String {
+		let contents = withUnsafeTemporaryAllocation(of: String.self, capacity: count) { buffer in
+			buffer.initialize(repeating: "")
+			var i = 0
+			for e in repeat each storage {
+				buffer[i] = String(describing: e)
+				i += 1
+			}
+			return buffer.joined(separator: ", ")
+		}
+		return "(\(contents))"
+	}
+}
+
+extension Tuple: CaseIterable where repeat each T: CaseIterable {
+	@inlinable public static var allCases: Combination<repeat (each T).AllCases> {
+		Combination(repeat (each T).allCases)
+	}
+}
+
+extension Tuple where repeat each T: Sequence {
+	/// Provides a view that iterates elements at the same time.
+	@inlinable public var zip: IteratorSequence<ZipIterator<repeat (each T).Iterator>> {
+		IteratorSequence(ZipIterator(repeat (each storage).makeIterator()))
+	}
+}
+
+extension Tuple where repeat each T: Collection {
+	/// Provides a collection that iterates the combination of the stored collections.
+	@inlinable public var combination: Combination<repeat each T> {
+		Combination(repeat each storage)
 	}
 }
